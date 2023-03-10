@@ -1,0 +1,12 @@
+{
+  "name": "@room-rate/common",
+  "version": "1.0.0",
+  "description": "房价公共包~",
+  "author": "hyc",
+  "private": true,
+  "main": "dist",
+  "type": "dist",
+  "scripts": {
+    "build": "tsc src/index"
+  }
+}
