@@ -6,7 +6,7 @@ import { COMMUNITY_LIST } from '@room-rate/common';
 import to from 'await-to-js';
 import axios from 'axios';
 import { load } from 'cheerio';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { createConnection } from 'mysql2/promise';
 import { delay, log } from '../../utils';
 
@@ -18,11 +18,11 @@ import { delay, log } from '../../utils';
 const getCommunity = async () => {
   // create the connection to database
   const connection = await createConnection({
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'DkdR/Ci5&pCV',
+    database: 'blog',
   });
   for (let q = 0; q < COMMUNITY_LIST.length; q++) {
     const item = COMMUNITY_LIST[q];
@@ -81,6 +81,7 @@ const getCommunity = async () => {
     log(`小区数据爬取成功~ ${data.name}`);
     await delay(1000);
   }
+  log(`🎉 小区数据爬取结束~~`);
   connection.end();
 };
 

@@ -1,4 +1,4 @@
-export const AREA_LIST: any[] = [
+export const AREA_LIST = [
   {
     name: '重庆',
     district_pinyin: '',
