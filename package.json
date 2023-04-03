@@ -6,13 +6,13 @@
     ]
   },
   "scripts": {
-    "dev-web": "yarn workspace @room-rate/web vite",
-    "build-web": "yarn workspace @room-rate/web tsc && vite build",
-    "preview-web": "yarn workspace @room-rate/web vite preview",
-    "build-server": "yarn workspace @room-rate/server nest build",
-    "start-server": "yarn workspace @room-rate/server nest start",
-    "start-server:dev": "yarn workspace @room-rate/server nest start --watch",
-    "start-server:prod": "yarn workspace @room-rate/server node dist/main",
+    "dev-web": "yarn workspace @room-rate/web dev",
+    "build-web": "yarn workspace @room-rate/web build",
+    "preview-web": "yarn workspace @room-rate/web preview",
+    "build-server": "yarn workspace @room-rate/server build",
+    "start-server": "yarn workspace @room-rate/server start",
+    "start-server:dev": "yarn workspace @room-rate/server start:dev",
+    "start-server:prod": "yarn workspace @room-rate/server start:prod",
     "build-common": "yarn workspace @room-rate/common build",
     "pm2": "pm2 start packages/server/dist/main.js --name room-rate-server"
   },
