@@ -19,7 +19,6 @@ export class CommunityService {
 
   async findAll() {
     const list = await this.communityRepository.find();
-    console.log(list);
     const districtData: any = {};
     COMMUNITY_KEY.map((key) => {
       districtData[key] = COMMUNITY_LIST.map(({ name }) => {

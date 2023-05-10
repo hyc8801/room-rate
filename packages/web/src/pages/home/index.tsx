@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
 import { getSecondHouse } from '../../apis/second-house';
 import "./index.less";
-import { AREA_LIST, SECOND_HOUSE_TYPE } from './constant';
+import { AREA_LIST, SECOND_HOUSE_TYPE } from '@room-rate/common/src/area';
 import { Select } from 'antd';
 import { Link } from 'react-router-dom';
 

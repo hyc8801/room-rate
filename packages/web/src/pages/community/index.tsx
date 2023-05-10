@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
 import { getCommunity } from '../../apis/second-house';
 import "./index.less";
-import { COMMUNITY_LIST, COMMUNITY_TYPE } from './constant';
+import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community';
 import { Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 
