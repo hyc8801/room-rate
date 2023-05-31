@@ -15,7 +15,7 @@ const areaFieldNames = {
 
 const HomePage = () => {
 
-  const [type, setType] = useState('quoted_price')
+  const [type, setType] = useState('total')
   const [area, setArea] = useState('重庆')
   const { data = {} } = useRequest(getSecondHouse)
 
