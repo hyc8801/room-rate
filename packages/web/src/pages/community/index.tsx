@@ -15,8 +15,8 @@ const areaFieldNames = {
 
 const CommunityPage = () => {
 
-  const [type, setType] = useState('quoted')
-  const [area, setArea] = useState('东原D7一期')
+  const [type, setType] = useState('average_price')
+  const [area, setArea] = useState('国奥村时光漫')
   const { data = {} } = useRequest(getCommunity)
 
   const option = useMemo(() => {
@@ -49,7 +49,9 @@ const CommunityPage = () => {
           return value.min - 20
         },
       },
-      series: data?.[type] || []
+      series: (data?.[type] || []).map((item: any) => {
+        return { ...item, symbol: 'none', sampling: 'lttb' }
+      })
     }
   }, [data, type])
 
@@ -95,7 +97,9 @@ const CommunityPage = () => {
           return value.min - 20
         },
       },
-      series: areaData?.[area] || []
+      series: (areaData?.[area] || []).map((item: any) => {
+        return { ...item, symbol: 'none', sampling: 'lttb' }
+      })
     }
   }, [data, area])
   return (

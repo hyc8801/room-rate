@@ -49,7 +49,9 @@ const HomePage = () => {
           return value.min - 20
         },
       },
-      series: data?.[type] || []
+      series: (data?.[type] || []).map((item: any) => {
+        return { ...item, symbol: 'none', sampling: 'lttb' }
+      })
     }
   }, [data, type])
 
@@ -95,7 +97,9 @@ const HomePage = () => {
           return value.min - 20
         },
       },
-      series: areaData?.[area] || []
+      series: (areaData?.[area] || []).map((item: any) => {
+        return { ...item, symbol: 'none', sampling: 'lttb' }
+      })
     }
   }, [data, area])
   return (
