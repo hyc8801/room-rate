@@ -5,13 +5,14 @@ import { AppModule } from './app.module';
 import { log } from './utils';
 import beikeTask from './tasks/beike';
 import getCommunity from './tasks/beike/community';
+import './config/env';
 
 log('🚀 启动任务~');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(3200);
+  await app.listen(Number(process.env.PROT || 3200));
 }
 // 接口服务
 bootstrap();
