@@ -6,6 +6,7 @@ import "./index.less";
 import { AREA_LIST, SECOND_HOUSE_TYPE } from '@room-rate/common/src/area';
 import { Select } from 'antd';
 import { Link } from 'react-router-dom';
+import { colors } from '../../utils/color';
 
 const areaFieldNames = {
   label: "name",
@@ -21,10 +22,11 @@ const HomePage = () => {
 
   const option = useMemo(() => {
     return {
-      title: {
-        text: SECOND_HOUSE_TYPE.find((item) => item.value === type)?.label
+      color: colors,
+      legend: {
+        type: 'scroll',
+        icon: 'roundRect'
       },
-      legend: {},
       grid: {
         left: '3%',
         right: '4%',
@@ -50,7 +52,21 @@ const HomePage = () => {
         },
       },
       series: (data?.[type] || []).map((item: any) => {
-        return { ...item, symbol: 'none', sampling: 'lttb' }
+        return {
+          ...item,
+          symbol: 'none',
+          sampling: 'lttb',
+          emphasis: {
+            focus: 'series',
+            label: {
+              show: true,
+              formatter: (params: any) => {
+                const { seriesName, value } = params;
+                return `${seriesName}: ${value?.[1]}`
+              }
+            }
+          }
+        }
       })
     }
   }, [data, type])
@@ -69,10 +85,11 @@ const HomePage = () => {
       })
     })
     return {
-      title: {
-        text: area
+      color: colors,
+      legend: {
+        type: 'scroll',
+        icon: 'roundRect'
       },
-      legend: {},
       grid: {
         left: '3%',
         right: '4%',
@@ -98,7 +115,21 @@ const HomePage = () => {
         },
       },
       series: (areaData?.[area] || []).map((item: any) => {
-        return { ...item, symbol: 'none', sampling: 'lttb' }
+        return {
+          ...item,
+          symbol: 'none',
+          sampling: 'lttb',
+          emphasis: {
+            focus: 'series',
+            label: {
+              show: true,
+              formatter: (params: any) => {
+                const { seriesName, value } = params;
+                return `${seriesName}: ${value?.[1]}`
+              }
+            }
+          }
+        }
       })
     }
   }, [data, area])

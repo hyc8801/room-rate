@@ -6,6 +6,7 @@ import "./index.less";
 import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community';
 import { Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
+import { colors } from '../../utils/color';
 
 const areaFieldNames = {
   label: "name",
@@ -21,10 +22,11 @@ const CommunityPage = () => {
 
   const option = useMemo(() => {
     return {
-      title: {
-        text: COMMUNITY_TYPE.find((item) => item.value === type)?.label
+      color: colors,
+      legend: {
+        type: 'scroll',
+        icon: 'roundRect'
       },
-      legend: {},
       grid: {
         left: '3%',
         right: '4%',
@@ -50,7 +52,21 @@ const CommunityPage = () => {
         },
       },
       series: (data?.[type] || []).map((item: any) => {
-        return { ...item, symbol: 'none', sampling: 'lttb' }
+        return {
+          ...item,
+          symbol: 'none',
+          sampling: 'lttb',
+          emphasis: {
+            focus: 'series',
+            label: {
+              show: true,
+              formatter: (params: any) => {
+                const { seriesName, value } = params;
+                return `${seriesName}: ${value?.[1]}`
+              }
+            }
+          }
+        }
       })
     }
   }, [data, type])
@@ -69,10 +85,11 @@ const CommunityPage = () => {
       })
     })
     return {
-      title: {
-        text: area
+      color: colors,
+      legend: {
+        type: 'scroll',
+        icon: 'roundRect'
       },
-      legend: {},
       grid: {
         left: '3%',
         right: '4%',
@@ -98,7 +115,21 @@ const CommunityPage = () => {
         },
       },
       series: (areaData?.[area] || []).map((item: any) => {
-        return { ...item, symbol: 'none', sampling: 'lttb' }
+        return {
+          ...item,
+          symbol: 'none',
+          sampling: 'lttb',
+          emphasis: {
+            focus: 'series',
+            label: {
+              show: true,
+              formatter: (params: any) => {
+                const { seriesName, value } = params;
+                return `${seriesName}: ${value?.[1]}`
+              }
+            }
+          }
+        }
       })
     }
   }, [data, area])
@@ -110,6 +141,7 @@ const CommunityPage = () => {
           key={item.id}
           type="link"
           target="_blank"
+          size="small"
           href={`https://cq.ke.com/ershoufang/co32f2l3c${item.id}/?sug=${item.name}`}
         > {item.name} </Button>
        ))}
