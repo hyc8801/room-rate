@@ -37,7 +37,13 @@ const HomePage = () => {
         trigger: 'axis',
         axisPointer: {
           animation: false
-        }
+        },
+        position: (...params: any[]) => {
+          const [ pos, , el, elRect, size ] = params;
+          let obj: any = { top: 10 };
+          obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+          return obj;
+        },
       },
       xAxis: {
         type: 'time',
