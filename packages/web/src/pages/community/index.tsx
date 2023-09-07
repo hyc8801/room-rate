@@ -7,6 +7,7 @@ import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community'
 import { Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { colors } from '../../utils/color';
+import { getOption } from '../../utils/common';
 
 const areaFieldNames = {
   label: "name",
@@ -21,60 +22,7 @@ const CommunityPage = () => {
   const { data = {} } = useRequest(getCommunity)
 
   const option = useMemo(() => {
-    return {
-      color: colors,
-      legend: {
-        type: 'scroll',
-        icon: 'roundRect'
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          animation: false
-        },
-        position: (...params: any[]) => {
-          const [ pos, , el, elRect, size ] = params;
-          let obj: any = { top: 10 };
-          obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
-          return obj;
-        },
-      },
-      xAxis: {
-        type: 'time',
-        axisLabel: {
-          formatter: "{yyyy}-{MM}-{dd}"
-        },
-      },
-      yAxis: {
-        type: 'value',
-        min: (value: any) => {
-          return value.min - 20
-        },
-      },
-      series: (data?.[type] || []).map((item: any) => {
-        return {
-          ...item,
-          symbol: 'none',
-          sampling: 'lttb',
-          emphasis: {
-            focus: 'series',
-            label: {
-              show: true,
-              formatter: (params: any) => {
-                const { seriesName, value } = params;
-                return `${seriesName}: ${value?.[1]}`
-              }
-            }
-          }
-        }
-      })
-    }
+    return getOption({ data, type })
   }, [data, type])
 
   const areaOption = useMemo(() => {
@@ -90,54 +38,7 @@ const CommunityPage = () => {
         })
       })
     })
-    return {
-      color: colors,
-      legend: {
-        type: 'scroll',
-        icon: 'roundRect'
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          animation: false
-        }
-      },
-      xAxis: {
-        type: 'time',
-        axisLabel: {
-          formatter: "{yyyy}-{MM}-{dd}"
-        },
-      },
-      yAxis: {
-        type: 'value',
-        min: (value: any) => {
-          return value.min - 20
-        },
-      },
-      series: (areaData?.[area] || []).map((item: any) => {
-        return {
-          ...item,
-          symbol: 'none',
-          sampling: 'lttb',
-          emphasis: {
-            focus: 'series',
-            label: {
-              show: true,
-              formatter: (params: any) => {
-                const { seriesName, value } = params;
-                return `${seriesName}: ${value?.[1]}`
-              }
-            }
-          }
-        }
-      })
-    }
+    return getOption({ data: areaData, type: area })
   }, [data, area])
   return (
     <div className='home-page'>
