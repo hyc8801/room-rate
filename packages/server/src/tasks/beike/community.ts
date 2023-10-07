@@ -27,7 +27,7 @@ const getCommunity = async () => {
   for (let q = 0; q < COMMUNITY_LIST.length; q++) {
     const item = COMMUNITY_LIST[q];
     const [err, res] = await to(
-      axios.get(`https://cq.ke.com/ershoufang/co32f2l3c${item.id}`),
+      axios.get(`https://cq.lianjia.com/ershoufang/co32f2l3c${item.id}`),
     );
     if (err) {
       log('小区数据抓取失败~');
@@ -44,7 +44,8 @@ const getCommunity = async () => {
     }
     const [err2, res2] = await to(
       axios.get(
-        `https://cq.ke.com/api/listtop?type=resblock&resblock_id=${item.id}&community_id=0&district_id=&bizcircle_id=&subway_station_id=&word=&source=ershou_xiaoqu`,
+        `https://cq.lianjia.com/api/listtop?semParams%5BsemResblockId%5D=${item.id}&semParams%5BsemType%5D=resblock&semParams%5BsemSource%5D=ershou_xiaoqu`,
+        // `https://cq.ke.com/api/listtop?type=resblock&resblock_id=${item.id}&community_id=0&district_id=&bizcircle_id=&subway_station_id=&word=&source=ershou_xiaoqu`,
       ),
     );
     if (err2) {
