@@ -6,6 +6,7 @@ import { log } from './utils';
 import beikeTask from './tasks/beike';
 import getCommunity from './tasks/beike/community';
 import './config/env';
+import cqHouseTaks from './tasks/cqHouse';
 
 log('🚀 启动任务~');
 
@@ -29,14 +30,23 @@ schedule.scheduleJob('0 40 8 * * 0-7', () => {
   getCommunity();
 });
 
+// 贝壳小区定时任务启动~每日8点40
+schedule.scheduleJob('0 20 8 * * 0-7', () => {
+  log('重庆网上房地产新房数据开始抓取~');
+  cqHouseTaks();
+});
+
 // 临时一次性运行，用于服务崩溃后单独运行当日的采集任务
 if (process.env.SINGLE === 'true') {
   const run = async () => {
     log('贝壳区县数据开始抓取~');
-    // await beikeTask();
+    await beikeTask();
 
     log('贝壳小区数据开始抓取~');
     await getCommunity();
+
+    log('重庆网上房地产新房数据开始抓取~');
+    cqHouseTaks();
   };
   run();
 }

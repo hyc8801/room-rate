@@ -1,0 +1,20 @@
+bArea 建筑面积
+iArea 套内面积
+sArea 公摊面积
+nsjg 拟售单价（套内）
+nsjmjg 拟售单价（建面）
+rType 户型： 其他
+roomstatus 房屋状态： 期房/认购/网签
+use 使用用途：成套住宅/其他用房/商业服务/物管用房/其他用房
+unitnumber 单元
+rn 房间号
+flr 层数
+
+const g = (str) => {
+    const data = JSON.parse(str);
+    let _data = [];
+    data.map((item) => {
+        _data = _data.concat(item.rooms)
+    })
+    return _data.filter((item) => item.use === '成套住宅').length
+}

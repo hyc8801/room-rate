@@ -3,6 +3,7 @@ import to from 'await-to-js';
 import { createConnection } from 'mysql2/promise';
 import { log } from '../../utils';
 import { getDataByErshou } from './apis';
+import { connectionOptions } from 'src/utils/db';
 
 /**
  * 贝壳二手房数据爬取
@@ -10,18 +11,7 @@ import { getDataByErshou } from './apis';
  */
 const beikeTask = async () => {
   // create the connection to database
-  const connection = await createConnection({
-    // host: process.env.DB_HOST,
-    // port: Number(process.env.DB_PORT),
-    // user: process.env.DB_USER,
-    // password: process.env.DB_PASSWORD,
-    // database: process.env.DB_DATABASE,
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'DkdR/Ci5&pCV',
-    database: 'blog',
-  });
+  const connection = await createConnection(connectionOptions);
   try {
     for (let index = 0; index < AREA_LIST.length; index++) {
       const item = AREA_LIST[index];

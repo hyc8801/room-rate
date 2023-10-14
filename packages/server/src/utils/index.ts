@@ -6,7 +6,7 @@ import dayjs = require('dayjs');
  * @param timeout 时间，毫秒
  * @returns
  */
-export const delay = (timeout: number) => {
+export const delay = (timeout = 3000) => {
   return new Promise<void>((resolve) =>
     setTimeout(() => {
       resolve();
@@ -26,4 +26,12 @@ export const log = (message?: any, ...optionalParams: any[]) => {
     message,
     ...optionalParams,
   );
+};
+
+/**
+ * 计算出A数组中相对于B少的项，并将所有少的返回
+ * @returns
+ */
+export const findMissingItems = <T = any>(A: T[], B: T[]): T[] => {
+  return A.filter((item) => !B.includes(item));
 };

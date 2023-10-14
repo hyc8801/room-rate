@@ -9,6 +9,7 @@ import { load } from 'cheerio';
 import * as dayjs from 'dayjs';
 import { createConnection } from 'mysql2/promise';
 import { delay, log } from '../../utils';
+import { connectionOptions } from 'src/utils/db';
 
 // https://cq.ke.com/ershoufang/co32f2l3c3611099957604/?sug=%E4%B8%9C%E5%8E%9FD7%E4%B8%80%E6%9C%9F
 
@@ -17,13 +18,7 @@ import { delay, log } from '../../utils';
  */
 const getCommunity = async () => {
   // create the connection to database
-  const connection = await createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'DkdR/Ci5&pCV',
-    database: 'blog',
-  });
+  const connection = await createConnection(connectionOptions);
   for (let q = 0; q < COMMUNITY_LIST.length; q++) {
     const item = COMMUNITY_LIST[q];
     const [err, res] = await to(
