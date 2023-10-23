@@ -39,7 +39,7 @@ const getRoomData = async (info: any) => {
     return;
   }
   const datalist: any[] = JSON.parse(res?.data.d);
-  const hasUtils = datalist?.length > 0;
+  const hasUtils = datalist?.length > 1;
   let list: any[] = [];
   datalist.forEach(({ rooms }) => {
     list = list.concat(rooms);
@@ -82,6 +82,13 @@ const getRoomData = async (info: any) => {
     connection.query(`insert into new_flats_record set ?`, item),
   );
 
+  // 如果期房数量等于0，则将该楼盘设为已售罄
+  if (qifang_num === 0) {
+    const sql = `UPDATE new_flats SET status = 1 WHERE buildingid = ?;`;
+    await connection.query(sql, [buildingid]);
+    log(`${info.community}：${info.name}楼盘已售罄💥`);
+  }
+
   if (err3) {
     log('插入数据失败~');
     console.log(err3);
@@ -91,6 +98,9 @@ const getRoomData = async (info: any) => {
   await connection.end();
 };
 
+/**
+ * 根据当日采集的楼盘数据，计算出小区的数据
+ */
 const getCommunity = async (community: any) => {
   // create the connection to database
   const connection = await createConnection(connectionOptions);
@@ -127,7 +137,7 @@ export const cqHouseTaks = async () => {
   // create the connection to database
   const connection = await createConnection(connectionOptions);
 
-  const sql = `SELECT name,buildingid,community FROM new_flats`;
+  const sql = `SELECT name,buildingid,community FROM new_flats WHERE WHERE (status != 1 or status  is null)`;
   const [err, newFlatsRes] = await to(connection.execute<any[]>(sql));
   if (err) {
     log(`查询失败了！！！`);
