@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { CommunityController } from './community.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Community } from './entities/community.entity';
+import { CommunityEntity } from './entities/community.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Community])],
+  imports: [TypeOrmModule.forFeature([CommunityEntity])],
   controllers: [CommunityController],
   providers: [CommunityService],
 })

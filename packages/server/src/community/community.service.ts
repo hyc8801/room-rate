@@ -4,13 +4,13 @@ import { Repository } from 'typeorm';
 import { COMMUNITY_KEY, COMMUNITY_LIST } from '@room-rate/common';
 import { CreateCommunityDto } from './dto/create-community.dto';
 import { UpdateCommunityDto } from './dto/update-community.dto';
-import { Community } from './entities/community.entity';
+import { CommunityEntity } from './entities/community.entity';
 
 @Injectable()
 export class CommunityService {
   constructor(
-    @InjectRepository(Community)
-    private communityRepository: Repository<Community>,
+    @InjectRepository(CommunityEntity)
+    private communityRepository: Repository<CommunityEntity>,
   ) {}
   create(createCommunityDto: CreateCommunityDto) {
     console.log(createCommunityDto);

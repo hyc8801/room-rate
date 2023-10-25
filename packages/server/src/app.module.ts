@@ -12,7 +12,13 @@ import { SecondHouseModule } from './second-house/second-house.module';
 import { DataSource } from 'typeorm';
 import { SecondHouseEntity } from './second-house/entities/second-house.entity';
 import { CommunityModule } from './community/community.module';
-import { Community } from './community/entities/community.entity';
+import { CommunityEntity } from './community/entities/community.entity';
+import { NewFlatsModule } from './new-flats/new-flats.module';
+import { NewFlatsController } from './new-flats/new-flats.controller';
+import { NewFlatsService } from './new-flats/new-flats.service';
+import { NewFlatsEntity } from './new-flats/entities/new-flats.entitys';
+import { NewFlatsRecordModule } from './new-flats-record/new-flats-record.module';
+import { NewFlatsRecordEntity } from './new-flats-record/entities/new-flats-record.entity';
 
 @Dependencies(DataSource)
 @Module({
@@ -24,15 +30,23 @@ import { Community } from './community/entities/community.entity';
       username: 'root',
       password: 'DkdR/Ci5&pCV',
       database: 'blog',
-      entities: [Cats, SecondHouseEntity, Community],
+      entities: [
+        Cats,
+        SecondHouseEntity,
+        CommunityEntity,
+        NewFlatsEntity,
+        NewFlatsRecordEntity,
+      ],
       synchronize: true,
     }),
     CatsModule,
     SecondHouseModule,
     CommunityModule,
+    NewFlatsModule,
+    NewFlatsRecordModule,
   ],
-  controllers: [AppController, CatsController, SecondHouseController],
-  providers: [AppService, CatsService, SecondHouseService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {
   dataSource: DataSource;

@@ -137,7 +137,7 @@ export const cqHouseTaks = async () => {
   // create the connection to database
   const connection = await createConnection(connectionOptions);
 
-  const sql = `SELECT name,buildingid,community FROM new_flats WHERE WHERE (status != 1 or status  is null)`;
+  const sql = `SELECT name,buildingid,community FROM new_flats WHERE (status != 1 or status is null)`;
   const [err, newFlatsRes] = await to(connection.execute<any[]>(sql));
   if (err) {
     log(`查询失败了！！！`);
