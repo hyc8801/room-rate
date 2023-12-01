@@ -157,6 +157,7 @@ export const cqHouseTaks = async () => {
     await getCommunity(item);
     await delay();
   }
+  log(`🎉新房抓取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
 };
 
 export default cqHouseTaks;

@@ -7,3 +7,7 @@ export const getSecondHouse = () => {
 export const getCommunity = () => {
   return request.get(`/api/community`)
 }
+
+export const getNewFlatsRecord = (params: any) => {
+  return request.get(`/api/new-flats-record`, { params })
+}

@@ -2,8 +2,12 @@ import { colors } from "./color";
 
 export const getOption = ({ data, type}: any) => {
   const typeData = data?.[type] || [];
+  return getOption2(typeData)
+}
+
+export const getOption2 = (data: any) => {
   const typeDataFirst: any = {};
-  typeData?.forEach((item: any) => {
+  data?.forEach((item: any) => {
     typeDataFirst[item.name] = item.data?.find((val: any) => val !== undefined)?.[1] || 0
   })
   return {
@@ -32,7 +36,7 @@ export const getOption = ({ data, type}: any) => {
       formatter: (dataList: any) => {
         const content = dataList.map((item: any, index: number) => {
           const { seriesName } = item;
-          const val = item.data?.[1] || '--';
+          const val = item.data?.[1] ?? '--';
           const color = colors[index % colors.length]
           const first = typeDataFirst[seriesName]
           const increment = val - first;
@@ -66,7 +70,7 @@ export const getOption = ({ data, type}: any) => {
         return value.min - 20
       },
     },
-    series: (data?.[type] || []).map((item: any) => {
+    series: (data || []).map((item: any) => {
       return {
         ...item,
         symbol: 'none',

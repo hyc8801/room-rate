@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks';
 import { getSecondHouse } from '../../apis/second-house';
 import "./index.less";
 import { AREA_LIST, SECOND_HOUSE_TYPE } from '@room-rate/common/src/area';
-import { Select } from 'antd';
+import { Select, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { colors } from '../../utils/color';
 import { getOption } from '../../utils/common';
@@ -42,7 +42,10 @@ const HomePage = () => {
   }, [data, area])
   return (
     <div className='home-page'>
-      <Link to="/community" >查看小区数据</Link>
+      <Space>
+        <Link to="/community" >查看小区数据</Link>
+        <Link to="/newHouse" >查看新房数据</Link>
+      </Space>
       <br />
       <Select options={SECOND_HOUSE_TYPE} value={type} onChange={setType} />
       <ReactECharts option={option} />

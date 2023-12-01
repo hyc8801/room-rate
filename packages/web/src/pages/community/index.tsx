@@ -42,7 +42,7 @@ const CommunityPage = () => {
   }, [data, area])
   return (
     <div className='home-page'>
-      <Link to="/" >查看区域数据</Link>
+      <Link to="/" >返回首页</Link>
        { COMMUNITY_LIST.map((item) => (
         <Button
           key={item.id}

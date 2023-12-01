@@ -37,6 +37,7 @@ import { NewFlatsRecordEntity } from './new-flats-record/entities/new-flats-reco
         NewFlatsEntity,
         NewFlatsRecordEntity,
       ],
+      // entities: [__dirname + "/entity/*.js"],
       synchronize: true,
     }),
     CatsModule,

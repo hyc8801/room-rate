@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { NewFlatsRecordService } from './new-flats-record.service';
 import { CreateNewFlatsRecordDto } from './dto/create-new-flats-record.dto';
 import { UpdateNewFlatsRecordDto } from './dto/update-new-flats-record.dto';
+import { NewFlatsRecordEntity } from './entities/new-flats-record.entity';
 
 @Controller('new-flats-record')
 export class NewFlatsRecordController {
@@ -21,8 +23,8 @@ export class NewFlatsRecordController {
   }
 
   @Get()
-  findAll() {
-    return this.newFlatsRecordService.findAll();
+  findAll(@Query('type') type: keyof NewFlatsRecordEntity) {
+    return this.newFlatsRecordService.findAll(type);
   }
 
   @Get(':id')

@@ -17,7 +17,15 @@ export class NewFlatsService {
   }
 
   async findAll() {
-    return await this.newFlatsRepository.find();
+    return this.newFlatsRepository.find();
+  }
+
+  async findAllCommunity() {
+    // SELECT DISTINCT community FROM new_flats;
+    const queryBuilder = this.newFlatsRepository.createQueryBuilder();
+    queryBuilder.select('DISTINCT community');
+    const distinctData = await queryBuilder.getRawMany();
+    return distinctData.map((item) => item.community);
   }
 
   findOne(id: number) {
