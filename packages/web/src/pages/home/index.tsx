@@ -43,8 +43,8 @@ const HomePage = () => {
   return (
     <div className='home-page'>
       <Space>
-        <Link to="/community" >查看小区数据</Link>
-        <Link to="/newHouse" >查看新房数据</Link>
+        <Link to="/newHouse" >新房数据</Link>
+        <Link to="/community" >二手数据</Link>
       </Space>
       <br />
       <Select options={SECOND_HOUSE_TYPE} value={type} onChange={setType} />
