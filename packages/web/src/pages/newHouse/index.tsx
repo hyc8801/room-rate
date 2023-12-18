@@ -18,7 +18,7 @@ const options = [
 
 const NewHousePage = () => {
 
-  const [type, setType] = useState('dealed')
+  const [type, setType] = useState('qifang_num')
   const { data = [] } = useRequest(() => getNewFlatsRecord({ type }), {
     refreshDeps: [type]
   })
