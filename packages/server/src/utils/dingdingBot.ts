@@ -1,6 +1,6 @@
 import axios from 'axios';
-import hmacSHA256 from 'crypto-js/hmac-sha256';
-import Base64 from 'crypto-js/enc-base64';
+import * as hmacSHA256 from 'crypto-js/hmac-sha256';
+import * as Base64 from 'crypto-js/enc-base64';
 
 class DingdingBot {
   /** webhook地址 */
