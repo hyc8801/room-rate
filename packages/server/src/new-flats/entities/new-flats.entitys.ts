@@ -70,6 +70,13 @@ export class NewFlatsEntity {
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
+    comment: '更新时间',
+  })
+  update_time: Date;
+
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
     comment: '创建时间',
   })
   create_time: Date;

@@ -10,6 +10,7 @@ import * as https from 'https';
 import { createConnection } from 'mysql2/promise';
 import { delay, findMissingItems, log } from 'src/utils';
 import { connectionOptions } from 'src/utils/db';
+import dingdingBot from 'src/utils/dingdingBot';
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
@@ -84,9 +85,14 @@ const getRoomData = async (info: any) => {
 
   // 如果期房数量等于0，则将该楼盘设为已售罄
   if (qifang_num === 0) {
-    const sql = `UPDATE new_flats SET status = 1 WHERE buildingid = ?;`;
+    const sql = `UPDATE new_flats SET status = 1, , update_time = CURRENT_TIMESTAMP WHERE buildingid = ?;`;
     await connection.query(sql, [buildingid]);
-    log(`${info.community}：${info.name}楼盘已售罄💥`);
+    const msg = `${info.community}：${info.name}楼盘已售罄💥`;
+    log(msg);
+    dingdingBot.pushMsg(
+      msg +
+        `/n https://www.cq315house.com/HtmlPage/ShowRooms.html?buildingid=${buildingid}`,
+    );
   }
 
   if (err3) {
