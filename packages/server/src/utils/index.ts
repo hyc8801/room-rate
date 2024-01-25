@@ -1,3 +1,6 @@
+import * as https from 'https';
+import * as fs from 'fs';
+import * as path from 'path';
 // import chalk from 'chalk';
 import dayjs = require('dayjs');
 
@@ -34,4 +37,28 @@ export const log = (message?: any, ...optionalParams: any[]) => {
  */
 export const findMissingItems = <T = any>(A: T[], B: T[]): T[] => {
   return A.filter((item) => !B.includes(item));
+};
+
+/** axios配置，取消验证 */
+export const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
+/** 读取配置文件 */
+export const getConfig = (): Promise<{ projectList: string[] }> => {
+  return new Promise((resolve, reject) => {
+    const configPath = path.resolve(process.cwd(), './config.json');
+    fs.readFile(configPath, 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        try {
+          const config = JSON.parse(data);
+          resolve(config);
+        } catch (error) {
+          reject(error);
+        }
+      }
+    });
+  });
 };

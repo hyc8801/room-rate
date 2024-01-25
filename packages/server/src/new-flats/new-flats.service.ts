@@ -11,15 +11,21 @@ export class NewFlatsService {
     @InjectRepository(NewFlatsEntity)
     private newFlatsRepository: Repository<NewFlatsEntity>,
   ) {}
-  create(createNewFlatDto: CreateNewFlatDto) {
-    console.log(`😋🙃 ~ file::`, createNewFlatDto);
-    return 'This action adds a new newFlat';
+  insert(createNewFlatDto: CreateNewFlatDto) {
+    return this.newFlatsRepository.insert(createNewFlatDto);
   }
 
   async findAll() {
     return this.newFlatsRepository.find();
   }
 
+  /** 查询所有的buildingid，返回数组 */
+  async getAllBuildingIds() {
+    const list = await this.newFlatsRepository.find({ select: ['buildingid'] });
+    return list.map(({ buildingid }) => buildingid);
+  }
+
+  /** 查询所有的小区名称，已去重 */
   async findAllCommunity() {
     // SELECT DISTINCT community FROM new_flats;
     const queryBuilder = this.newFlatsRepository.createQueryBuilder();

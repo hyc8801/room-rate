@@ -4,48 +4,28 @@
  */
 
 import to from 'await-to-js';
-import axios from 'axios';
 import * as dayjs from 'dayjs';
-import * as https from 'https';
 import { createConnection } from 'mysql2/promise';
 import { delay, findMissingItems, log } from 'src/utils';
 import { connectionOptions } from 'src/utils/db';
 import dingdingBot from 'src/utils/dingdingBot';
-
-const agent = new https.Agent({
-  rejectUnauthorized: false,
-});
+import { getRoomData } from './apis';
 
 /**
  * 采集新房数据
  * @param buildingid 建筑id
  * @returns
  */
-const getRoomData = async (info: any) => {
+const getRoomDataTaks = async (info: any) => {
   const { buildingid } = info;
   // create the connection to database
   const connection = await createConnection(connectionOptions);
-  const [err, res] = await to(
-    axios.post(
-      `https://www.cq315house.com/WebService/WebFormService.aspx/GetRoomJson`,
-      { buildingid },
-      {
-        httpsAgent: agent,
-      },
-    ),
-  );
-  if (err) {
-    log(`采集失败！！！${buildingid}`);
-    log(err);
-    return;
-  }
-  const datalist: any[] = JSON.parse(res?.data.d);
+  const datalist: any[] = await getRoomData(info);
   const hasUtils = datalist?.length > 1;
   let list: any[] = [];
   datalist.forEach(({ rooms }) => {
     list = list.concat(rooms);
   });
-  // const list: any[] = JSON.parse(res?.data.d)?.[0].rooms;
 
   const yesterday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
   const sql = `SELECT * FROM  new_flats_record WHERE buildingid = ? AND create_time = ?`;
@@ -153,7 +133,7 @@ export const cqHouseTaks = async () => {
   const list = newFlatsRes?.[0] || [];
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
-    await getRoomData(item);
+    await getRoomDataTaks(item);
     await delay();
   }
 

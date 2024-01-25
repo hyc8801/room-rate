@@ -66,7 +66,7 @@ const getCommunity = async () => {
       // 创建日期
       create_time: dayjs().format('YYYY-MM-DD'),
     };
-    const [err3, res3] = await to(
+    const [err3] = await to(
       connection.query(`insert into community set ?`, data),
     );
     if (err3) {
@@ -74,10 +74,10 @@ const getCommunity = async () => {
       console.log(err3);
       return;
     }
-    log(`小区数据爬取成功~ ${data.name}`);
+    log(`[贝壳]小区数据爬取成功~ ${data.name}`);
     await delay(1000);
   }
-  log(`🎉 小区数据爬取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
+  log(`🎉 [贝壳]小区数据抓取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
   connection.end();
 };
 

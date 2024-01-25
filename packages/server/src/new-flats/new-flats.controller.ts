@@ -17,7 +17,7 @@ export class NewFlatsController {
 
   @Post()
   create(@Body() createNewFlatDto: CreateNewFlatDto) {
-    return this.newFlatsService.create(createNewFlatDto);
+    // return this.newFlatsService.create(createNewFlatDto);
   }
 
   @Get()

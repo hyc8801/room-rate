@@ -37,6 +37,13 @@ export class NewFlatsEntity {
 
   @Column({
     nullable: true,
+    type: 'longtext',
+    comment: '项目名称',
+  })
+  projectname: string;
+
+  @Column({
+    nullable: true,
     comment: '总套数',
   })
   total: number;
