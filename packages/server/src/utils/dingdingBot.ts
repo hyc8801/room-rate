@@ -1,11 +1,13 @@
 import axios from 'axios';
 import * as hmacSHA256 from 'crypto-js/hmac-sha256';
 import * as Base64 from 'crypto-js/enc-base64';
+import { log } from '.';
 
 class DingdingBot {
   /** webhook地址 */
   private webhookUrl;
   constructor(webhookUrl: string, secret: string) {
+    log('🦄🌈初始化钉钉机器人hook');
     const timestamp = new Date().getTime();
     const sign = this.signFn(secret, `${timestamp}\n${secret}`);
     this.webhookUrl = `${webhookUrl}&timestamp=${timestamp}&sign=${sign}`;

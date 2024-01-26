@@ -77,7 +77,7 @@ const getCommunity = async () => {
     log(`[贝壳]小区数据爬取成功~ ${data.name}`);
     await delay(1000);
   }
-  log(`🎉 [贝壳]小区数据抓取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
+  log(`🎉🎉🎉[贝壳]小区数据结束抓取~`);
   connection.end();
 };
 

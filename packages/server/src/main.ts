@@ -12,16 +12,16 @@ import { searchProjectTaks } from './tasks/cqHouse/searchProject';
 log('🚀 启动任务~~');
 
 const run = async (app: INestApplication) => {
-  log('[贝壳]区域数据开始抓取~  临时');
+  log('🚧[贝壳]区域数据开始抓取~  临时');
   await beikeTask();
 
-  log('[贝壳]小区数据开始抓取~ 临时');
+  log('🚧[贝壳]小区数据开始抓取~ 临时');
   await getCommunity();
 
-  log('[重庆网上房地产]小区数据开始抓取~ 临时');
+  log('🚧[重庆网上房地产]小区数据开始抓取~ 临时');
   await searchProjectTaks(app);
 
-  log('[重庆网上房地产]楼栋数据开始抓取~ 临时');
+  log('🚧[重庆网上房地产]楼栋数据开始抓取~ 临时');
   await cqHouseTaks();
 };
 
@@ -34,22 +34,22 @@ async function bootstrap() {
   if (process.env.SINGLE === 'true') run(app);
 
   schedule.scheduleJob('0 0 9 * * 0-7', () => {
-    log('[贝壳]区域数据开始抓取~');
+    log('✨[贝壳]区域数据开始抓取~');
     beikeTask();
   });
 
   schedule.scheduleJob('0 40 8 * * 0-7', () => {
-    log('[贝壳]小区数据开始抓取~');
+    log('✨[贝壳]小区数据开始抓取~');
     getCommunity();
   });
 
   schedule.scheduleJob('0 0 8 * * 0-7', () => {
-    log('[重庆网上房地产]小区数据开始抓取~');
+    log('✨[重庆网上房地产]小区数据开始抓取~');
     searchProjectTaks(app);
   });
 
   schedule.scheduleJob('0 20 8 * * 0-7', () => {
-    log('[重庆网上房地产]楼栋数据开始抓取~');
+    log('✨[重庆网上房地产]楼栋数据开始抓取~');
     cqHouseTaks();
   });
 }

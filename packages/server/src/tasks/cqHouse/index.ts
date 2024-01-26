@@ -143,7 +143,7 @@ export const cqHouseTaks = async () => {
     await getCommunity(item);
     await delay();
   }
-  log(`🎉新房抓取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
+  log(`🎉🎉🎉[重庆网上房地产]楼栋数据结束抓取~`);
 };
 
 export default cqHouseTaks;

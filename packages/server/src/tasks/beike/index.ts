@@ -33,7 +33,7 @@ const beikeTask = async () => {
       }
       log(`抓取区域抓取成功~ ${item.name}`);
     }
-    log(`🎉[贝壳]区域数据抓取结束~~~~~~~~~~~~~~~~~~~~~~~~~`);
+    log(`🎉🎉🎉[贝壳]区域数据结束抓取~`);
   } catch (error) {
     log('抓取失败~');
     console.log(error);
