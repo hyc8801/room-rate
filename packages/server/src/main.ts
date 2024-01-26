@@ -43,7 +43,7 @@ async function bootstrap() {
     getCommunity();
   });
 
-  schedule.scheduleJob('0 20 8 * * 0-7', () => {
+  schedule.scheduleJob('0 0 8 * * 0-7', () => {
     log('[重庆网上房地产]小区数据开始抓取~');
     searchProjectTaks(app);
   });

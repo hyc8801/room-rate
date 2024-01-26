@@ -44,6 +44,14 @@ export class NewFlatsEntity {
 
   @Column({
     nullable: true,
+    type: 'varchar',
+    length: 100,
+    comment: '项目id',
+  })
+  projectid: string;
+
+  @Column({
+    nullable: true,
     comment: '总套数',
   })
   total: number;

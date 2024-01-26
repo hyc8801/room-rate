@@ -24,11 +24,12 @@ export const searchProjectTaks = async (app: INestApplication) => {
     for (let j = 0; j < list.length; j++) {
       const item = list[j];
       const dataList = await getRoomData(item);
-      const { buildingid, blockname, projectname } = item;
+      const { buildingid, blockname, projectid } = item;
       const row = {
         name: blockname,
-        projectname,
+        projectid,
         buildingid,
+        projectname: item.projectname,
         total: getTotal(dataList),
         rn: dataList[0]?.maxX,
         unit: dataList.length,
