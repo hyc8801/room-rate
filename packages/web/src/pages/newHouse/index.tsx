@@ -12,7 +12,7 @@ import { getOption, getOption2 } from '../../utils/common';
 const options = [
   { label: '网签数量', value: 'wangqian_num'},
   { label: '认购数量', value: 'rengou_num'},
-  { label: '期房数量', value: 'qifang_num'},
+  { label: '期房/现房数量', value: 'qifang_num'},
   { label: '成交数量', value: 'dealed'},
 ]
 

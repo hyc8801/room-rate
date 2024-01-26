@@ -38,8 +38,8 @@ export class NewFlatsService {
     return `This action returns a #${id} newFlat`;
   }
 
-  update(id: number, updateNewFlatDto: UpdateNewFlatDto) {
-    return `This action updates a #${id} newFlat`;
+  update(criteria: any, updateNewFlatDto: UpdateNewFlatDto) {
+    return this.newFlatsRepository.update(criteria, updateNewFlatDto);
   }
 
   remove(id: number) {

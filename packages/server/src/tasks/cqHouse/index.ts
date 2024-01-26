@@ -10,14 +10,20 @@ import { delay, findMissingItems, log } from 'src/utils';
 import { connectionOptions } from 'src/utils/db';
 import dingdingBot from 'src/utils/dingdingBot';
 import { getRoomData } from './apis';
+import { INestApplication } from '@nestjs/common';
+import { NewFlatsService } from 'src/new-flats/new-flats.service';
 
 /**
  * 采集新房数据
  * @param buildingid 建筑id
  * @returns
  */
-const getRoomDataTaks = async (info: any) => {
+const getRoomDataTaks = async (info: any, app: INestApplication) => {
   const { buildingid } = info;
+
+  // 创建 NewFlatsService 实例
+  const newFlatsService = app.get(NewFlatsService);
+
   // create the connection to database
   const connection = await createConnection(connectionOptions);
   const datalist: any[] = await getRoomData(info);
@@ -38,7 +44,8 @@ const getRoomDataTaks = async (info: any) => {
     log(err2);
   }
   const qifang = list.filter(
-    (item) => item.roomstatus === '期房' && item.use === '成套住宅',
+    (item) =>
+      ['期房', '现房'].includes(item.roomstatus) && item.use === '成套住宅',
   );
   const qifang_num = qifang.length;
   const qifangList = qifang.map(({ flr, rn, unitnumber }) => {
@@ -65,13 +72,14 @@ const getRoomDataTaks = async (info: any) => {
 
   // 如果期房数量等于0，则将该楼盘设为已售罄
   if (qifang_num === 0) {
-    const sql = `UPDATE new_flats SET status = 1, , update_time = CURRENT_TIMESTAMP WHERE buildingid = ?;`;
-    await connection.query(sql, [buildingid]);
-    const msg = `${info.community}：${info.name}楼盘已售罄💥`;
+    // const sql = `UPDATE new_flats SET status = 1, , update_time = CURRENT_TIMESTAMP WHERE buildingid = ?;`;
+    await newFlatsService.update({ buildingid }, { status: 1 });
+    // await connection.query(sql, [buildingid]);
+    const msg = `💥 ${info.community}：${info.name}楼盘已售罄`;
     log(msg);
     dingdingBot.pushMsg(
       msg +
-        `/n https://www.cq315house.com/HtmlPage/ShowRooms.html?buildingid=${buildingid}`,
+        ` https://www.cq315house.com/HtmlPage/ShowRooms.html?buildingid=${buildingid}`,
     );
   }
 
@@ -119,7 +127,7 @@ const getCommunity = async (community: any) => {
 /**
  * 重庆网上房地产新房任务
  */
-export const cqHouseTaks = async () => {
+export const cqHouseTaks = async (app: INestApplication) => {
   // create the connection to database
   const connection = await createConnection(connectionOptions);
 
@@ -133,7 +141,7 @@ export const cqHouseTaks = async () => {
   const list = newFlatsRes?.[0] || [];
   for (let i = 0; i < list.length; i++) {
     const item = list[i];
-    await getRoomDataTaks(item);
+    await getRoomDataTaks(item, app);
     await delay();
   }
 

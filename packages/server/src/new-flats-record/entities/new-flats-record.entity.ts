@@ -17,10 +17,10 @@ export class NewFlatsRecordEntity {
   @Column({ nullable: true, comment: '认购数量' })
   rengou_num: number;
 
-  @Column({ nullable: true, comment: '期房数量' })
+  @Column({ nullable: true, comment: '期房/现房数量' })
   qifang_num: number;
 
-  @Column({ nullable: true, type: 'longtext', comment: '期房列表' })
+  @Column({ nullable: true, type: 'longtext', comment: '期房/现房列表' })
   qifang_list: string;
 
   @Column({ nullable: true, type: 'longtext', comment: '成交列表' })
