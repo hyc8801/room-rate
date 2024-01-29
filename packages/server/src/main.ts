@@ -12,14 +12,14 @@ import { searchProjectTaks } from './tasks/cqHouse/searchProject';
 log('🚀 启动任务~~');
 
 const run = async (app: INestApplication) => {
-  // log('🚧 [贝壳]区域数据开始抓取~  临时');
-  // await beikeTask();
+  log('🚧 [贝壳]区域数据开始抓取~  临时');
+  await beikeTask();
 
-  // log('🚧 [贝壳]小区数据开始抓取~ 临时');
-  // await getCommunity();
+  log('🚧 [贝壳]小区数据开始抓取~ 临时');
+  await getCommunity();
 
-  // log('🚧 [重庆网上房地产]小区数据开始抓取~ 临时');
-  // await searchProjectTaks(app);
+  log('🚧 [重庆网上房地产]小区数据开始抓取~ 临时');
+  await searchProjectTaks(app);
 
   log('🚧 [重庆网上房地产]楼栋数据开始抓取~ 临时');
   await cqHouseTaks(app);

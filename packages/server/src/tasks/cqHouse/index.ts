@@ -120,7 +120,7 @@ const getCommunity = async (community: any) => {
       log(err3);
     }
   }
-  log(`🏡 新房数据爬取成功~ ${community}`);
+  log(`🏡 新房数据统计完成~ ${community}`);
   await connection.end();
 };
 
