@@ -3,26 +3,24 @@ import * as schedule from 'node-schedule';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { log } from './utils';
-import beikeTask from './tasks/beike';
-import getCommunity from './tasks/beike/community';
+import { beikeAreaTaks, beikeCommunityTaks } from './tasks/beike';
+import { cqBuildingTaks, cqCommunityTaks } from './tasks/cqHouse';
 import './config/env';
-import cqHouseTaks from './tasks/cqHouse';
-import { searchProjectTaks } from './tasks/cqHouse/searchProject';
 
 log('🚀 启动任务~~');
 
 const run = async (app: INestApplication) => {
   log('🚧 [贝壳]区域数据开始抓取~  临时');
-  await beikeTask();
+  await beikeAreaTaks(app);
 
   log('🚧 [贝壳]小区数据开始抓取~ 临时');
-  await getCommunity();
+  await beikeCommunityTaks(app);
 
   log('🚧 [重庆网上房地产]小区数据开始抓取~ 临时');
-  await searchProjectTaks(app);
+  await cqCommunityTaks(app);
 
   log('🚧 [重庆网上房地产]楼栋数据开始抓取~ 临时');
-  await cqHouseTaks(app);
+  await cqBuildingTaks(app);
 };
 
 async function bootstrap() {
@@ -35,22 +33,22 @@ async function bootstrap() {
 
   schedule.scheduleJob('0 0 9 * * 0-7', () => {
     log('✨[贝壳]区域数据开始抓取~');
-    beikeTask();
+    beikeAreaTaks(app);
   });
 
   schedule.scheduleJob('0 40 8 * * 0-7', () => {
     log('✨[贝壳]小区数据开始抓取~');
-    getCommunity();
+    beikeCommunityTaks(app);
   });
 
   schedule.scheduleJob('0 0 8 * * 0-7', () => {
     log('✨[重庆网上房地产]小区数据开始抓取~');
-    searchProjectTaks(app);
+    cqCommunityTaks(app);
   });
 
   schedule.scheduleJob('0 20 8 * * 0-7', () => {
     log('✨[重庆网上房地产]楼栋数据开始抓取~');
-    cqHouseTaks(app);
+    cqBuildingTaks(app);
   });
 }
 // 接口服务

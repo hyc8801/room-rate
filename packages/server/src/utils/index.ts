@@ -36,7 +36,7 @@ export const log = (message?: any, ...optionalParams: any[]) => {
  * @returns
  */
 export const findMissingItems = <T = any>(A: T[], B: T[]): T[] => {
-  return A.filter((item) => !B.includes(item));
+  return A?.filter((item) => !B.includes(item)) || [];
 };
 
 /** axios配置，取消验证 */

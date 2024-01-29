@@ -4,7 +4,7 @@ export const getSecondHouse = () => {
   return request.get(`/api/second-house`)
 }
 
-export const getCommunity = () => {
+export const beikeCommunityTaks = () => {
   return request.get(`/api/community`)
 }
 

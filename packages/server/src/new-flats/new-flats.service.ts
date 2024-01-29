@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateNewFlatDto } from './dto/create-new-flat.dto';
 import { UpdateNewFlatDto } from './dto/update-new-flat.dto';
 import { NewFlatsEntity } from './entities/new-flats.entitys';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, IsNull, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -34,11 +34,26 @@ export class NewFlatsService {
     return distinctData.map((item) => item.community);
   }
 
+  /**
+   * 查询所有状态未销售完的小区
+   */
+  async getFlatsWithoutStatus1(): Promise<NewFlatsEntity[]> {
+    // `SELECT name,buildingid,community FROM new_flats WHERE (status != 1 or status is null)`
+    const flats = await this.newFlatsRepository.find({
+      where: [{ status: Not(1) }, { status: IsNull() }],
+      select: ['name', 'buildingid', 'community'],
+    });
+    return flats;
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} newFlat`;
   }
 
-  update(criteria: any, updateNewFlatDto: UpdateNewFlatDto) {
+  update(
+    criteria: FindOptionsWhere<NewFlatsEntity>,
+    updateNewFlatDto: UpdateNewFlatDto,
+  ) {
     return this.newFlatsRepository.update(criteria, updateNewFlatDto);
   }
 

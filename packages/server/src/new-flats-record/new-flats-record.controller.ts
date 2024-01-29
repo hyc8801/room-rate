@@ -27,18 +27,18 @@ export class NewFlatsRecordController {
     return this.newFlatsRecordService.findAll(type);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.newFlatsRecordService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.newFlatsRecordService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateNewFlatsRecordDto: UpdateNewFlatsRecordDto,
-  ) {
-    return this.newFlatsRecordService.update(+id, updateNewFlatsRecordDto);
-  }
+  // @Patch(':id')
+  // update(
+  //   @Param('id') id: string,
+  //   @Body() updateNewFlatsRecordDto: UpdateNewFlatsRecordDto,
+  // ) {
+  //   return this.newFlatsRecordService.update(+id, updateNewFlatsRecordDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

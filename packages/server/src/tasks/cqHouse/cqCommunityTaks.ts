@@ -8,7 +8,7 @@ import dingdingBot from 'src/utils/dingdingBot';
 import { findMaxFlr, getTotal } from './utils';
 
 /** 搜索小区项目任务 */
-export const searchProjectTaks = async (app: INestApplication) => {
+export const cqCommunityTaks = async (app: INestApplication) => {
   // 创建 NewFlatsService 实例
   const newFlatsService = app.get(NewFlatsService);
   const { projectList } = await getConfig();

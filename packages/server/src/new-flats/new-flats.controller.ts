@@ -30,10 +30,10 @@ export class NewFlatsController {
     return this.newFlatsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateNewFlatDto: UpdateNewFlatDto) {
-    return this.newFlatsService.update(+id, updateNewFlatDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateNewFlatDto: UpdateNewFlatDto) {
+  //   return this.newFlatsService.update(+id, updateNewFlatDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

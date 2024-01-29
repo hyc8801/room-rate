@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
-import { getCommunity } from '../../apis/second-house';
+import { beikeCommunityTaks } from '../../apis/second-house';
 import "./index.less";
 import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community';
 import { Button, Select } from 'antd';
@@ -19,7 +19,7 @@ const CommunityPage = () => {
 
   const [type, setType] = useState('average_price')
   const [area, setArea] = useState('国奥村时光漫')
-  const { data = {} } = useRequest(getCommunity)
+  const { data = {} } = useRequest(beikeCommunityTaks)
 
   const option = useMemo(() => {
     return getOption({ data, type })

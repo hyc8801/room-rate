@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
-import { getCommunity, getNewFlatsRecord } from '../../apis/second-house';
+import { beikeCommunityTaks, getNewFlatsRecord } from '../../apis/second-house';
 import "./index.less";
 import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community';
 import { Button, Select } from 'antd';
