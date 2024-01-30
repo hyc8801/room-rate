@@ -1,17 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AREA_LIST, SECOND_HOUSE_KEY } from '@room-rate/common';
+import { CreateBeikeAreaDto } from './dto/create-beike-area.dto';
 import { Repository } from 'typeorm';
-import { SecondHouseEntity } from './entities/second-house.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SECOND_HOUSE_KEY, AREA_LIST } from '@room-rate/common';
+import { BeikeAreaEntity } from './entities/beike-area.entity';
 
 @Injectable()
-export class SecondHouseService {
+export class BeikeAreaService {
   constructor(
-    @InjectRepository(SecondHouseEntity)
-    private secondHouseRepository: Repository<SecondHouseEntity>,
+    @InjectRepository(BeikeAreaEntity)
+    private beikeAreaRepository: Repository<BeikeAreaEntity>,
   ) {}
+
+  insert(data: BeikeAreaEntity) {
+    return this.beikeAreaRepository.insert(data);
+  }
+
   async getAll() {
-    const list = await this.secondHouseRepository.find();
+    const list = await this.beikeAreaRepository.find();
     const districtData: any = {};
     SECOND_HOUSE_KEY.map((key) => {
       districtData[key] = AREA_LIST.map(({ name }) => {

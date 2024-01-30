@@ -1,7 +1,11 @@
 import { requestMiddleware } from './utils';
 import axios from 'axios';
 import dayjs = require('dayjs');
-import { delay } from '../../utils';
+import { delay, log } from '../../utils';
+import { BeikeAreaEntity } from 'src/beike-area/entities/beike-area.entity';
+import to from 'await-to-js';
+import { load } from 'cheerio';
+import { BeikeCommunityEntity } from 'src/beike-community/entities/beike-community.entity';
 
 const BEIKE_URL = `https://m.ke.com/archer/api/apiProxy/channelApiProxy/api/index/secondhouse`;
 
@@ -47,7 +51,6 @@ export const getDataByErshou = async (
     quoted_price: data?.price_plot?.[-1]?.series?.[0].data.at(-1) || null,
     beike_price: data?.price_plot?.[-1]?.series?.[1].data.at(-1) || null,
     district_name,
-    create_time: dayjs().add(-1, 'day').format('YYYY-MM-DD'),
   };
   supply_index?.map((item: { key: string; num: any }) => {
     supply[item.key.replace('yd_', '')] = item.num;
@@ -63,5 +66,46 @@ export const getDataByErshou = async (
     const { totalCount } = data2?.getErShouFangList || {};
     supply[item.key] = totalCount;
   }
-  return supply;
+  return supply as BeikeAreaEntity;
+};
+
+/** 获取贝壳小区数据 */
+export const getBeikeCommunityData = async (item: any) => {
+  const res = await axios.get(
+    `https://cq.lianjia.com/ershoufang/co32f2l3c${item.id}`,
+  );
+
+  const $ = load(res?.data);
+  const total_3room_south = $('.total span')?.text();
+  let quoted = 0;
+  const list = $('.sellListContent .followInfo');
+  for (let i = 0; i < list.length; i++) {
+    if (list?.eq(i)?.text()?.includes('今天发布')) {
+      quoted++;
+    }
+  }
+  const res2 = await axios.get(
+    `https://cq.lianjia.com/api/listtop?semParams%5BsemResblockId%5D=${item.id}&semParams%5BsemType%5D=resblock&semParams%5BsemSource%5D=ershou_xiaoqu`,
+  );
+
+  const info2 = res2?.data?.data?.info || {};
+  const data: BeikeCommunityEntity = {
+    // 平局价格
+    average_price: info2.unitPrice,
+    // 小区总数
+    total: info2.sellNum,
+    // 90天成交数据
+    dealed: info2['90saleCount'],
+    // 30天带看数据
+    showed: info2.day30See,
+    // 小区名称
+    name: item.name,
+    // 三房朝南总数
+    total_3room_south: total_3room_south ? Number(total_3room_south) : null,
+    // 新增挂牌数量
+    quoted,
+    // 创建日期
+    // create_time: dayjs().format('YYYY-MM-DD'),
+  };
+  return data;
 };

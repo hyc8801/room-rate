@@ -1,4 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('new_flats_record')
 export class NewFlatsRecordEntity {
@@ -29,9 +34,8 @@ export class NewFlatsRecordEntity {
   @Column({ nullable: true, comment: '成交数量' })
   dealed: number;
 
-  @Column({
+  @CreateDateColumn({
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
     comment: '创建时间',
   })
   create_time: Date;

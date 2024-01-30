@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('new_flats')
 export class NewFlatsEntity {
@@ -82,16 +88,14 @@ export class NewFlatsEntity {
   })
   community: string;
 
-  @Column({
+  @UpdateDateColumn({
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
     comment: '更新时间',
   })
   update_time: Date;
 
-  @Column({
+  @CreateDateColumn({
     type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP',
     comment: '创建时间',
   })
   create_time: Date;

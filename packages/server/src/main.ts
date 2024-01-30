@@ -30,6 +30,8 @@ async function bootstrap() {
 
   // 临时一次性运行，用于服务崩溃后单独运行当日的采集任务
   if (process.env.SINGLE === 'true') run(app);
+  // log('✨[贝壳]区域数据开始抓取~1');
+  // beikeAreaTaks(app);
 
   schedule.scheduleJob('0 0 9 * * 0-7', () => {
     log('✨[贝壳]区域数据开始抓取~');
