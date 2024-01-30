@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 import { log } from './utils';
 import { beikeAreaTaks, beikeCommunityTaks } from './tasks/beike';
 import { cqBuildingTaks, cqCommunityTaks } from './tasks/cqHouse';
-import './config/env';
+import '../config/env';
 
 log('🚀 启动任务~~');
 
