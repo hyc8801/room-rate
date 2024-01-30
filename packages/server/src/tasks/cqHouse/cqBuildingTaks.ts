@@ -56,7 +56,7 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
     rengou_num: list.filter((item) => item.roomstatus === '认购').length,
     community: info.community,
     dealed: yesterdata ? yesterdata.qifang_num - qifang_num : 0,
-    create_time: dayjs().toDate(),
+    // create_time: dayjs().toDate(),
   };
   await newFlatsRecordService.insert(item);
 
