@@ -11,7 +11,7 @@ import { CqBuildingRecordService } from './cq-building-record.service';
 import { CreateCqBuildingRecordDto } from './dto/create-cq-building-record.dto';
 import { CqBuildingRecordEntity } from './entities/cq-building-record.entity';
 
-@Controller('new-flats-record')
+@Controller('cq-building-record')
 export class CqBuildingRecordController {
   constructor(
     private readonly cqBuildingRecordService: CqBuildingRecordService,

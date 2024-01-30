@@ -1,13 +1,13 @@
 import request from "../utils/request"
 
 export const getSecondHouse = () => {
-  return request.get(`/api/second-house`)
+  return request.get(`/api/beike-area`)
 }
 
 export const beikeCommunityTaks = () => {
-  return request.get(`/api/community`)
+  return request.get(`/api/beike-community`)
 }
 
 export const getNewFlatsRecord = (params: any) => {
-  return request.get(`/api/new-flats-record`, { params })
+  return request.get(`/api/cq-building-record`, { params })
 }

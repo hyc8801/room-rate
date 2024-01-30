@@ -1,13 +1,11 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
-import { beikeCommunityTaks, getNewFlatsRecord } from '../../apis/second-house';
+import {  getNewFlatsRecord } from '../../apis/second-house';
 import "./index.less";
-import { COMMUNITY_LIST, COMMUNITY_TYPE } from '@room-rate/common/src/community';
-import { Button, Select } from 'antd';
+import {  Select } from 'antd';
 import { Link } from 'react-router-dom';
-import { colors } from '../../utils/color';
-import { getOption, getOption2 } from '../../utils/common';
+import {  getOption2 } from '../../utils/common';
 
 const options = [
   { label: '网签数量', value: 'wangqian_num'},
