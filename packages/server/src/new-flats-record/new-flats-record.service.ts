@@ -67,7 +67,7 @@ export class NewFlatsRecordService {
       .addSelect('SUM(rengou_num)', 'rengou_num')
       .addSelect('SUM(dealed)', 'dealed')
       .where('community = :community', { community })
-      .andWhere('create_time = :createTime', { createTime: date })
+      .andWhere('DATE(create_time) = :createTime', { createTime: date })
       .andWhere('buildingid IS NOT NULL')
       .groupBy('community')
       .getRawOne();

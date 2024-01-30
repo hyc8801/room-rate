@@ -101,11 +101,11 @@ export const cqBuildingTaks = async (app: INestApplication) => {
   const newFlatsService = app.get(NewFlatsService);
   const list = await newFlatsService.getFlatsWithoutStatus1();
 
-  for (let i = 0; i < list.length; i++) {
-    const item = list[i];
-    await getRoomDataTaks(item, app);
-    await delay();
-  }
+  // for (let i = 0; i < list.length; i++) {
+  //   const item = list[i];
+  //   await getRoomDataTaks(item, app);
+  //   await delay();
+  // }
 
   const communityList = [...new Set(list.map((item) => item.community))];
   for (let i = 0; i < communityList.length; i++) {
