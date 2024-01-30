@@ -8,8 +8,8 @@ import { delay, findMissingItems, log } from 'src/utils';
 import dingdingBot from 'src/utils/dingdingBot';
 import { getRoomData } from './apis';
 import { INestApplication } from '@nestjs/common';
-import { NewFlatsService } from 'src/new-flats/new-flats.service';
-import { NewFlatsRecordService } from 'src/new-flats-record/new-flats-record.service';
+import { CqBuildingService } from 'src/cq-building/cq-building.service';
+import { CqBuildingRecordService } from 'src/cq-building-record/cq-building-record.service';
 
 /**
  * 采集新房数据
@@ -19,10 +19,10 @@ import { NewFlatsRecordService } from 'src/new-flats-record/new-flats-record.ser
 const getRoomDataTaks = async (info: any, app: INestApplication) => {
   const { buildingid } = info;
 
-  // 创建 NewFlatsService 实例
-  const newFlatsService = app.get(NewFlatsService);
-  // 创建 newFlatsRecordService 实例
-  const newFlatsRecordService = app.get(NewFlatsRecordService);
+  // 创建 CqBuildingService 实例
+  const cqBuildingService = app.get(CqBuildingService);
+  // 创建 cqBuildingRecordService 实例
+  const cqBuildingRecordService = app.get(CqBuildingRecordService);
 
   const datalist: any[] = await getRoomData(info);
   const hasUtils = datalist?.length > 1;
@@ -30,7 +30,7 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
   datalist.forEach(({ rooms }) => (list = list.concat(rooms)));
 
   // 获取昨天的数据
-  const yesterdata = await newFlatsRecordService.findOne({
+  const yesterdata = await cqBuildingRecordService.findOne({
     buildingid,
     create_time: dayjs().subtract(1, 'day').toDate(),
   });
@@ -58,11 +58,11 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
     dealed: yesterdata ? yesterdata.qifang_num - qifang_num : 0,
     // create_time: dayjs().toDate(),
   };
-  await newFlatsRecordService.insert(item);
+  await cqBuildingRecordService.insert(item);
 
   // 如果期房数量等于0，则将该楼盘设为已售罄
   if (qifang_num === 0) {
-    await newFlatsService.update({ buildingid }, { status: 1 });
+    await cqBuildingService.update({ buildingid }, { status: 1 });
     const msg = `💥 ${info.community}：${info.name}楼盘已售罄`;
     log(msg);
     dingdingBot.pushMsg(
@@ -82,14 +82,14 @@ export const cqCommunityTaks = async (
   community: any,
   app: INestApplication,
 ) => {
-  // 创建 newFlatsRecordService 实例
-  const newFlatsRecordService = app.get(NewFlatsRecordService);
+  // 创建 cqBuildingRecordService 实例
+  const cqBuildingRecordService = app.get(CqBuildingRecordService);
 
-  const communitySum = await newFlatsRecordService.getSumByCommunityAndDate(
+  const communitySum = await cqBuildingRecordService.getSumByCommunityAndDate(
     community,
     dayjs().format('YYYY-MM-DD'),
   );
-  newFlatsRecordService.insert(communitySum);
+  cqBuildingRecordService.insert(communitySum);
   log(`🏡 新房数据统计完成~ ${community}`);
 };
 
@@ -97,15 +97,15 @@ export const cqCommunityTaks = async (
  * 重庆网上房地产新房任务
  */
 export const cqBuildingTaks = async (app: INestApplication) => {
-  // 创建 NewFlatsService 实例
-  const newFlatsService = app.get(NewFlatsService);
-  const list = await newFlatsService.getFlatsWithoutStatus1();
+  // 创建 CqBuildingService 实例
+  const cqBuildingService = app.get(CqBuildingService);
+  const list = await cqBuildingService.getFlatsWithoutStatus1();
 
-  // for (let i = 0; i < list.length; i++) {
-  //   const item = list[i];
-  //   await getRoomDataTaks(item, app);
-  //   await delay();
-  // }
+  for (let i = 0; i < list.length; i++) {
+    const item = list[i];
+    await getRoomDataTaks(item, app);
+    await delay();
+  }
 
   const communityList = [...new Set(list.map((item) => item.community))];
   for (let i = 0; i < communityList.length; i++) {

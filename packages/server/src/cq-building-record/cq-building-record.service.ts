@@ -1,32 +1,33 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
-import { CreateNewFlatsRecordDto } from './dto/create-new-flats-record.dto';
-import { UpdateNewFlatsRecordDto } from './dto/update-new-flats-record.dto';
-import { NewFlatsRecordEntity } from './entities/new-flats-record.entity';
-import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { CreateCqBuildingRecordDto } from './dto/create-cq-building-record.dto';
+import { UpdateCqBuildingRecordDto } from './dto/update-cq-building-record.dto';
+import { CqBuildingRecordEntity } from './entities/cq-building-record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NewFlatsService } from 'src/new-flats/new-flats.service';
+import { Repository, FindOptionsWhere } from 'typeorm';
+import { CqBuildingService } from 'src/cq-building/cq-building.service';
 
 @Injectable()
-export class NewFlatsRecordService {
+export class CqBuildingRecordService {
   constructor(
-    @InjectRepository(NewFlatsRecordEntity)
-    private newFlatsRecordRepository: Repository<NewFlatsRecordEntity>,
-    @Inject(forwardRef(() => NewFlatsService))
-    private newFlatsService: NewFlatsService,
+    @InjectRepository(CqBuildingRecordEntity)
+    private cqBuildingRecordRepository: Repository<CqBuildingRecordEntity>,
+    @Inject(forwardRef(() => CqBuildingService))
+    private cqBuildingService: CqBuildingService,
   ) {}
-  create(createNewFlatsRecordDto: CreateNewFlatsRecordDto) {
+
+  create(createNewFlatsRecordDto: CreateCqBuildingRecordDto) {
     return 'This action adds a new newFlatsRecord';
   }
 
-  insert(createNewFlatDto: CreateNewFlatsRecordDto) {
-    return this.newFlatsRecordRepository.insert(createNewFlatDto);
+  insert(createNewFlatDto: CreateCqBuildingRecordDto) {
+    return this.cqBuildingRecordRepository.insert(createNewFlatDto);
   }
 
-  async findAll(type: keyof NewFlatsRecordEntity = 'dealed') {
-    const queryBuilder = this.newFlatsRecordRepository.createQueryBuilder();
+  async findAll(type: keyof CqBuildingRecordEntity = 'dealed') {
+    const queryBuilder = this.cqBuildingRecordRepository.createQueryBuilder();
     queryBuilder.where('buildingid IS NULL');
     const results = await queryBuilder.getMany();
-    const communityList = await this.newFlatsService.findAllCommunity();
+    const communityList = await this.cqBuildingService.findAllCommunity();
     return communityList.map((name) => {
       return {
         name,
@@ -41,25 +42,24 @@ export class NewFlatsRecordService {
     // return results;
   }
 
-  async findOne(options: FindOptionsWhere<NewFlatsRecordEntity>) {
-    return this.newFlatsRecordRepository.findOneBy(options);
+  async findOne(options: FindOptionsWhere<CqBuildingRecordEntity>) {
+    return this.cqBuildingRecordRepository.findOneBy(options);
   }
 
   update(
-    criteria: FindOptionsWhere<NewFlatsRecordEntity>,
-    updateNewFlatsRecordDto: UpdateNewFlatsRecordDto,
+    criteria: FindOptionsWhere<CqBuildingRecordEntity>,
+    updateNewFlatsRecordDto: CqBuildingRecordEntity,
   ) {
-    return this.newFlatsRecordRepository.update(
+    return this.cqBuildingRecordRepository.update(
       criteria,
       updateNewFlatsRecordDto,
     );
-    // return `This action updates a #${id} newFlatsRecord`;
   }
 
   /** 根据小区名称和时间查询总数 */
   async getSumByCommunityAndDate(community: string, date: string) {
     // 'SELECT community, SUM(qifang_num) as qifang_num, SUM(wangqian_num) as wangqian_num, SUM(rengou_num) as rengou_num, SUM(dealed) as dealed FROM new_flats_record WHERE community = ? AND create_time = ? GROUP BY community'
-    const result = await this.newFlatsRecordRepository
+    const result = await this.cqBuildingRecordRepository
       .createQueryBuilder()
       .select('community')
       .addSelect('SUM(qifang_num)', 'qifang_num')
@@ -72,7 +72,7 @@ export class NewFlatsRecordService {
       .groupBy('community')
       .getRawOne();
 
-    return result as NewFlatsRecordEntity;
+    return result as CqBuildingRecordEntity;
   }
 
   remove(id: number) {

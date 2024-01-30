@@ -1,13 +1,12 @@
 import { Dependencies, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { NewFlatsModule } from './new-flats/new-flats.module';
-import { NewFlatsRecordModule } from './new-flats-record/new-flats-record.module';
 import { BeikeCommunityModule } from './beike-community/beike-community.module';
 import { BeikeAreaModule } from './beike-area/beike-area.module';
+import { CqBuildingModule } from './cq-building/cq-building.module';
+import { CqBuildingRecordModule } from './cq-building-record/cq-building-record.module';
 
 @Dependencies(DataSource)
 @Module({
@@ -18,16 +17,15 @@ import { BeikeAreaModule } from './beike-area/beike-area.module';
       port: 3306,
       username: 'root',
       password: 'DkdR/Ci5&pCV',
-      database: 'blog',
+      database: 'house',
       autoLoadEntities: true,
       // entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    CatsModule,
-    NewFlatsModule,
-    NewFlatsRecordModule,
     BeikeCommunityModule,
     BeikeAreaModule,
+    CqBuildingModule,
+    CqBuildingRecordModule,
   ],
   controllers: [AppController],
   providers: [AppService],

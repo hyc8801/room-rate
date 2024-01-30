@@ -6,10 +6,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('new_flats')
-export class NewFlatsEntity {
+@Entity('cq_building')
+export class CqBuildingEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({
     nullable: true,
@@ -32,14 +32,14 @@ export class NewFlatsEntity {
     comment: '楼栋状态，1为已售罄',
     default: () => 0,
   })
-  status: number;
+  status?: number;
 
   @Column({
     nullable: true,
     type: 'longtext',
     comment: '楼栋原始数据',
   })
-  data: string;
+  data?: string;
 
   @Column({
     nullable: true,
@@ -92,11 +92,11 @@ export class NewFlatsEntity {
     type: 'timestamp',
     comment: '更新时间',
   })
-  update_time: Date;
+  update_time?: Date;
 
   @CreateDateColumn({
     type: 'timestamp',
     comment: '创建时间',
   })
-  create_time: Date;
+  create_time?: Date;
 }

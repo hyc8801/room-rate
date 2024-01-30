@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity('new_flats_record')
-export class NewFlatsRecordEntity {
+@Entity('cq_building_record')
+export class CqBuildingRecordEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

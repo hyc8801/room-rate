@@ -1,19 +1,20 @@
 // 搜索楼盘
 
 import { INestApplication } from '@nestjs/common';
-import { NewFlatsService } from 'src/new-flats/new-flats.service';
 import { delay, getConfig, log } from 'src/utils';
 import { getProjectList, getRoomData } from './apis';
 import dingdingBot from 'src/utils/dingdingBot';
 import { findMaxFlr, getTotal } from './utils';
+import { CqBuildingService } from 'src/cq-building/cq-building.service';
+import { CqBuildingEntity } from 'src/cq-building/entities/cq-building.entity';
 
 /** 搜索小区项目任务 */
 export const cqCommunityTaks = async (app: INestApplication) => {
-  // 创建 NewFlatsService 实例
-  const newFlatsService = app.get(NewFlatsService);
+  // 创建 CqBuildingService 实例
+  const cqBuildingService = app.get(CqBuildingService);
   const { projectList } = await getConfig();
 
-  const dbList = await newFlatsService.getAllBuildingIds();
+  const dbList = await cqBuildingService.getAllBuildingIds();
   // 需要搜索的项目名称
   for (let i = 0; i < projectList.length; i++) {
     const projectname = projectList[i];
@@ -27,7 +28,7 @@ export const cqCommunityTaks = async (app: INestApplication) => {
       const dataList = await getRoomData(item);
       await delay();
       const { buildingid, blockname, projectid } = item;
-      const row = {
+      const row: CqBuildingEntity = {
         name: blockname,
         projectid,
         buildingid,
@@ -40,7 +41,7 @@ export const cqCommunityTaks = async (app: INestApplication) => {
       };
       // 住宅为空
       if (!row.total) break;
-      await newFlatsService.insert(row);
+      await cqBuildingService.insert(row);
       const msg = `【${projectList[i]}】 新增楼栋：${row.name}`;
       dingdingBot.pushMsg(msg);
       log(msg);
