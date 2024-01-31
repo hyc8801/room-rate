@@ -30,4 +30,5 @@ const sourceDir = path.join(cwd, 'dist');
 const targetDir = path.join(cwd, 'build');
 
 // 将当前执行环境下的 /dist 目录下的文件和文件夹复制到 /build 目录下
+console.log(`  📦📦📦 正在将/dist复制到/build ~`);
 copyDirectory(sourceDir, targetDir);

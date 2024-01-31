@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { COMMUNITY_KEY, COMMUNITY_LIST } from '@room-rate/common';
 import { Repository } from 'typeorm';
 import { BeikeCommunityEntity } from './entities/beike-community.entity';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class BeikeCommunityService {
@@ -25,7 +26,7 @@ export class BeikeCommunityService {
           name,
           type: 'line',
           data: districtList.map((i: any) => [
-            new Date(i.create_time).getTime(),
+            dayjs(i.create_time).startOf('day').valueOf(),
             i[key] || 0,
           ]),
         };

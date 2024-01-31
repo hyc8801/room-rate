@@ -1,9 +1,7 @@
 import { requestMiddleware } from './utils';
 import axios from 'axios';
-import dayjs = require('dayjs');
-import { delay, log } from '../../utils';
+import { delay } from '../../utils';
 import { BeikeAreaEntity } from 'src/beike-area/entities/beike-area.entity';
-import to from 'await-to-js';
 import { load } from 'cheerio';
 import { BeikeCommunityEntity } from 'src/beike-community/entities/beike-community.entity';
 

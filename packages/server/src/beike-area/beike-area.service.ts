@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBeikeAreaDto } from './dto/create-beike-area.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SECOND_HOUSE_KEY, AREA_LIST } from '@room-rate/common';
 import { BeikeAreaEntity } from './entities/beike-area.entity';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class BeikeAreaService {
@@ -26,7 +26,7 @@ export class BeikeAreaService {
           name,
           type: 'line',
           data: districtList.map((i: any) => [
-            new Date(i.create_time).getTime(),
+            dayjs(i.create_time).startOf('day').valueOf(),
             i[key] || 0,
           ]),
         };

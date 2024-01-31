@@ -5,6 +5,7 @@ import { CqBuildingRecordEntity } from './entities/cq-building-record.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, FindOptionsWhere } from 'typeorm';
 import { CqBuildingService } from 'src/cq-building/cq-building.service';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class CqBuildingRecordService {
@@ -35,7 +36,7 @@ export class CqBuildingRecordService {
         data: results
           .filter((item) => item.community === name)
           .map((i) => {
-            return [new Date(i.create_time).getTime(), i[type]];
+            return [dayjs(i.create_time).startOf('day').valueOf(), i[type]];
           }),
       };
     });
