@@ -15,7 +15,7 @@
     "start-server:dev": "yarn workspace @room-rate/server start:dev",
     "start-server:prod": "yarn workspace @room-rate/server start:prod",
     "build-common": "yarn workspace @room-rate/common build",
-    "pm2": "cd packages/server && pm2 start build/src/main.js --name room-rate-server"
+    "pm2": "cd packages/server && yarn pm2"
   },
   "devDependencies": {
     "typescript": "^4.7.4"

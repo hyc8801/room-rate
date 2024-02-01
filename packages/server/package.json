@@ -12,14 +12,15 @@
     "start-single": "cross-env NODE_ENV=development SINGLE=true nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "cross-env NODE_ENV=production node build/main",
+    "start:prod": "cross-env NODE_ENV=production node build/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "copy": "node ./scripts/copy"
+    "copy": "node ./scripts/copy",
+    "pm2": "./node_modules/.bin/cross-env NODE_ENV=production pm2 start build/src/main.js --name room-rate-server"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",

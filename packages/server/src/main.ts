@@ -7,8 +7,6 @@ import { beikeAreaTaks, beikeCommunityTaks } from './tasks/beike';
 import { cqBuildingTaks, cqCommunityTaks } from './tasks/cqHouse';
 import '../config/env';
 
-log('🚀 启动任务~~');
-
 const run = async (app: INestApplication) => {
   log('🚧 [贝壳]区域数据开始抓取~  临时');
   await beikeAreaTaks(app);
@@ -24,6 +22,7 @@ const run = async (app: INestApplication) => {
 };
 
 async function bootstrap() {
+  log(`🚀 服务启动~~ 端口：${process.env.PROT || 3200}`);
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(Number(process.env.PROT || 3200));
