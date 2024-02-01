@@ -29,11 +29,8 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
   let list: any[] = [];
   datalist.forEach(({ rooms }) => (list = list.concat(rooms)));
 
-  // 获取昨天的数据
-  const yesterdata = await cqBuildingRecordService.findOneByBuilding(
-    buildingid,
-    dayjs().subtract(1, 'day').startOf('day').toDate(),
-  );
+  /** 查询小于今天的最近一条数据 */
+  const yesterdata = await cqBuildingRecordService.findLatestRecord(buildingid);
 
   const qifang = list.filter(
     (item) =>

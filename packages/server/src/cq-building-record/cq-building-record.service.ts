@@ -49,9 +49,27 @@ export class CqBuildingRecordService {
 
   async findOneByBuilding(buildingid: string, createTime: Date | string) {
     const record = await this.cqBuildingRecordRepository
-      .createQueryBuilder('record')
+      .createQueryBuilder()
       .where(`DATE(create_time) = :createTime`, { createTime })
       .andWhere(`buildingid = :buildingid`, { buildingid })
+      .getOne();
+
+    return record;
+  }
+
+  /** 查询小于今天的最近一条数据 */
+  async findLatestRecord(buildingid: string) {
+    // 获取今天的日期
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // 构建查询条件
+    const record = await this.cqBuildingRecordRepository
+      .createQueryBuilder()
+      .where('buildingid = :buildingid', { buildingid })
+      .andWhere('create_time < :today', { today })
+      .orderBy('create_time', 'DESC')
+      .take(1)
       .getOne();
 
     return record;
