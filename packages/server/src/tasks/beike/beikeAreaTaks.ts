@@ -22,7 +22,7 @@ export const beikeAreaTaks = async (app: INestApplication) => {
 
     await beikeAreaService.insert(supply);
 
-    log(`抓取区域抓取成功~ ${item.name}`);
+    log(`[贝壳]抓取区域抓取成功~ ${item.name}`);
   }
   log(`🎉🎉🎉[贝壳]区域数据结束抓取~`);
 };

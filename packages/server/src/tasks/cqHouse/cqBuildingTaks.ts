@@ -71,7 +71,7 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
     );
   }
 
-  log(`🏫 新房数据爬取成功~ ${info.community}：${info.name}`);
+  log(`🏫 [重庆网上房地产]楼栋数据爬取成功~ ${info.community}：${info.name}`);
 };
 
 /**
@@ -90,7 +90,7 @@ export const cqCommunityTaks = async (
     dayjs().format('YYYY-MM-DD'),
   );
   cqBuildingRecordService.insert(communitySum);
-  log(`🏡 新房数据统计完成~ ${community}`);
+  log(`🏡 [重庆网上房地产]新房数据统计完成~ ${community}`);
 };
 
 /**
