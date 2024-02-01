@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react';
 import { useRequest } from 'ahooks';
 import {  getNewFlatsRecord } from '../../apis/second-house';
 import "./index.less";
-import {  Select } from 'antd';
+import {  Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import {  getOption2 } from '../../utils/common';
 
@@ -23,7 +23,17 @@ const NewHousePage = () => {
 
   return (
     <div className='home-page'>
-      <Link to="/" >返回首页</Link><br />
+      <Link to="/" >返回首页</Link>
+      { data.map((item: any) => (
+        <Button
+          key={item.name}
+          type="link"
+          target="_blank"
+          size="small"
+          href={`https://www.cq315house.com/HtmlPage/serviceSeaList.html?projectname=${item.name}`}
+        > {item.name} </Button>
+      ))}
+      <br />
       <Select options={options} value={type} onChange={setType} />
       <ReactECharts option={getOption2(data)} />
       <br />

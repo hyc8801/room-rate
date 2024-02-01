@@ -15,11 +15,6 @@ export class BeikeCommunityController {
     return this.beikeCommunityService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   // return this.beikeCommunityService.findOne(+id);
-  // }
-
   // @Patch(':id')
   // update(
   //   @Param('id') id: string,

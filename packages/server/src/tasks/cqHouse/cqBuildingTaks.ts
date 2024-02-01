@@ -30,10 +30,10 @@ const getRoomDataTaks = async (info: any, app: INestApplication) => {
   datalist.forEach(({ rooms }) => (list = list.concat(rooms)));
 
   // 获取昨天的数据
-  const yesterdata = await cqBuildingRecordService.findOne({
+  const yesterdata = await cqBuildingRecordService.findOneByBuilding(
     buildingid,
-    create_time: dayjs().subtract(1, 'day').toDate(),
-  });
+    dayjs().subtract(1, 'day').startOf('day').toDate(),
+  );
 
   const qifang = list.filter(
     (item) =>

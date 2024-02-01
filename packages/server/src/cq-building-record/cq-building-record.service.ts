@@ -47,6 +47,16 @@ export class CqBuildingRecordService {
     return this.cqBuildingRecordRepository.findOneBy(options);
   }
 
+  async findOneByBuilding(buildingid: string, createTime: Date | string) {
+    const record = await this.cqBuildingRecordRepository
+      .createQueryBuilder('record')
+      .where(`DATE(create_time) = :createTime`, { createTime })
+      .andWhere(`buildingid = :buildingid`, { buildingid })
+      .getOne();
+
+    return record;
+  }
+
   update(
     criteria: FindOptionsWhere<CqBuildingRecordEntity>,
     updateNewFlatsRecordDto: CqBuildingRecordEntity,
