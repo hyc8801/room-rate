@@ -1,6 +1,6 @@
 import { requestMiddleware } from './utils';
 import axios from 'axios';
-import { delay } from '../../utils';
+import { convertToNumber, delay } from '../../utils';
 import { BeikeAreaEntity } from 'src/beike-area/entities/beike-area.entity';
 import { load } from 'cheerio';
 import { BeikeCommunityEntity } from 'src/beike-community/entities/beike-community.entity';
@@ -89,13 +89,13 @@ export const getBeikeCommunityData = async (item: any) => {
   const info2 = res2?.data?.data?.info || {};
   const data: BeikeCommunityEntity = {
     // 平局价格
-    average_price: info2.unitPrice,
+    average_price: convertToNumber(info2.unitPrice),
     // 小区总数
-    total: info2.sellNum,
+    total: convertToNumber(info2.sellNum),
     // 90天成交数据
-    dealed: info2['90saleCount'],
+    dealed: convertToNumber(info2['90saleCount']),
     // 30天带看数据
-    showed: info2.day30See,
+    showed: convertToNumber(info2.day30See),
     // 小区名称
     name: item.name,
     // 三房朝南总数

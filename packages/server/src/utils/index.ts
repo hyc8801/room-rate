@@ -62,3 +62,16 @@ export const getConfig = (): Promise<{ projectList: string[] }> => {
     });
   });
 };
+
+/**
+ * 尝试将字符串转换为数字
+ * @param str 要转换的字符串
+ * @returns 转换后的数字，如果转换失败则返回0
+ */
+export function convertToNumber(str: string): number {
+  const num = Number(str);
+  if (isNaN(num)) {
+    return 0;
+  }
+  return num;
+}
