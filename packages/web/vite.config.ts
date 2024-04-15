@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3201',
+        // target: 'http://localhost:3201', // 开发
+        target: 'http://localhost:3200', // 生产
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

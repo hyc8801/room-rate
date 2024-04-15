@@ -34,6 +34,7 @@ const condition = [
  * @returns
  */
 export const getDataByErshou = async (
+  mapData: any,
   district_id?: number | string | null,
   district_name?: string,
   district_pinyin?: string,
@@ -58,11 +59,12 @@ export const getDataByErshou = async (
 
   for (let index = 0; index < condition.length; index++) {
     const item = condition[index];
-    const url = `${TOTAL_BEIKE_URL}?cityId=${cityId}&condition=%252F${district_pinyin}%252F${item.value}`;
-    const data2 = await requestMiddleware(axios.get(url));
-    delay(1000);
-    const { totalCount } = data2?.getErShouFangList || {};
-    supply[item.key] = totalCount;
+    /** 原本通过列表查询总数，但已经被屏蔽，改用地图数据查询总数 */
+    // const url = `${TOTAL_BEIKE_URL}?cityId=${cityId}&condition=%252F${district_pinyin}%252F${item.value}`;
+    // const data2 = await requestMiddleware(axios.get(url));
+    await delay(1000);
+    // const { totalCount } = data2?.getErShouFangList || {};
+    supply[item.key] = mapData[item.key][district_name || '']?.['quoted'];
   }
   return supply as BeikeAreaEntity;
 };
@@ -106,4 +108,57 @@ export const getBeikeCommunityData = async (item: any) => {
     // create_time: dayjs().format('YYYY-MM-DD'),
   };
   return data;
+};
+
+/** 获取贝壳地图数据 */
+export const getBeikeMapByCondition = async (condition = '') => {
+  const res = await axios.get(
+    `https://map.ke.com/proxyApi/i.c-pc-webapi.ke.com/map/bubblelist`,
+    {
+      params: {
+        cityId: 500000,
+        dataSource: 'ESF',
+        condition,
+        id: '',
+        groupType: 'district',
+        maxLatitude: '30.092336524967926',
+        minLatitude: '29.169113002717022',
+        maxLongitude: '107.0400097302419',
+        minLongitude: '105.71770400754427',
+      },
+    },
+  );
+  const { bubbleList } = res?.data.data;
+  const district: Record<string, any> = {};
+  const list: any[] = bubbleList.map((item: any) => {
+    district[item.name] = {
+      district_name: item.name,
+      quoted: item.count,
+      quoted_price: item.price,
+    };
+    return district[item.name];
+  });
+  // 计算冲二手房总量
+  const chognqing = list.reduce(
+    (total, item) => total + Number(item.quoted),
+    0,
+  );
+  district['重庆'] = {
+    district_name: '重庆',
+    quoted: chognqing,
+  };
+  return district;
+};
+
+/** 获取所有种类的地图数据 */
+export const getBeikeMap = async () => {
+  const typesObj: Record<string, any> = {};
+  for (let i = 0; i < condition.length; i++) {
+    const conditionItem = condition[i];
+    typesObj[conditionItem.key] = await getBeikeMapByCondition(
+      conditionItem.value,
+    );
+    await delay(1000);
+  }
+  return typesObj;
 };

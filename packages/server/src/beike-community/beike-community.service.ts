@@ -25,10 +25,12 @@ export class BeikeCommunityService {
         return {
           name,
           type: 'line',
-          data: districtList.map((i: any) => [
-            dayjs(i.create_time).startOf('day').valueOf(),
-            i[key] || 0,
-          ]),
+          data: districtList
+            .filter((i: any) => i[key])
+            .map((i: any) => [
+              dayjs(i.create_time).startOf('day').valueOf(),
+              i[key] || 0,
+            ]),
         };
       });
     });
