@@ -40,9 +40,9 @@ export const cqCommunityTaks = async (app: INestApplication) => {
         community: projectname,
       };
       // 住宅为空
-      if (!row.total) break;
+      if (!row.total) continue;
       await cqBuildingService.insert(row);
-      const msg = `【${projectList[i]}】 新增楼栋：${row.name}`;
+      const msg = `【${projectList[i]}】 新增楼栋：${row.name} https://www.cq315house.com/HtmlPage/ShowRooms.html?buildingid=${projectid}`;
       dingdingBot.pushMsg(msg);
       log(msg);
     }
